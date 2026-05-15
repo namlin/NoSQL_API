@@ -1,0 +1,18 @@
+services:
+    kafka: 
+        image: neo4j:ubi10
+        container_name: neo4j
+        ports:
+            - "7474:7474"
+            - "7687:7687"
+
+        restart: no
+
+        environment:
+            NEO4J_AUTH: none
+        
+        volumes:
+            - neo4j-volume:/var/lib/neo4j/data
+
+volumes:
+        neo4j-volume:
