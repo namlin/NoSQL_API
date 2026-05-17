@@ -39,3 +39,35 @@ MATCH (p:persons {id: row.nconst})
 MATCH (m:movies {id: row.tconst})
 MERGE (p)-[r:WORKED_IN {as: row.category}]->(m)
 RETURN p, r, m LIMIT 100;
+
+
+//Crear nodos con generos desde title.basics
+LOAD CSV WITH HEADERS
+FROM 'https://drive.google.com/uc?export=download&id=1MvgGgqUAVDdaivIs9idcmBPILmj5Z7mm'
+AS row
+UNWIND split(row.genres, ',') AS gen
+WITH DISTINCT gen
+MERGE (g:genres {genre: gen})
+RETURN g LIMIT 100;
+
+
+//Crear relaciones entre peliculas y generos desde title.basics
+LOAD CSV WITH HEADERS
+FROM 'https://drive.google.com/uc?export=download&id=1MvgGgqUAVDdaivIs9idcmBPILmj5Z7mm'
+AS row
+UNWIND split(row.genres, ',') AS gen
+MATCH (g:genres {genre: gen})
+MATCH (m:movies {id: row.tconst})
+MERGE (m)-[r:BELONGS_TO]->(g)
+RETURN m, r, g LIMIT 100;
+
+
+//Crear relacion entre personas y sus trabajos famosos desde name.basics
+LOAD CSV WITH HEADERS
+FROM 'https://drive.google.com/uc?export=download&id=16bRmF2MPYlPjD6rD3vrXCjQgl4jcRdAQ'
+AS row
+UNWIND split(row.knownForTitles, ',') AS knownFor
+MATCH (p:persons {id: row.nconst})
+MATCH (m:movies {id: knownFor})
+MERGE (p)-[r:KNOWN_FOR]->(m)
+RETURN p, r, m LIMIT 100;
