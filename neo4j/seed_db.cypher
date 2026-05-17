@@ -39,10 +39,3 @@ MATCH (p:persons {id: row.nconst})
 MATCH (m:movies {id: row.tconst})
 MERGE (p)-[r:WORKED_IN {as: row.category}]->(m)
 RETURN p, r, m LIMIT 100;
-
-
-//Visualizar relaciones de trabajo en peliculas
-MERGE (m:movies)
-MERGE (p:persons)
-MERGE (p)-[r:WORKED_IN]->(m)
-RETURN p, r, m;
