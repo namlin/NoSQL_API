@@ -1,0 +1,16 @@
+venv
+.env
+
+# PYCACHE
+app/__pycache__/__init__.cpython-312.pyc
+app/__pycache__/config.cpython-312.pyc
+app/__pycache__/dependencies.cpython-312.pyc
+app/__pycache__/main.cpython-312.pyc
+app/models/__pycache__/__init__.cpython-312.pyc
+app/models/__pycache__/movie.cpython-312.pyc
+app/repositories/__pycache__/__init__.cpython-312.pyc
+app/repositories/__pycache__/base.cpython-312.pyc
+app/repositories/__pycache__/mock.cpython-312.pyc
+app/routers/__pycache__/__init__.cpython-312.pyc
+app/routers/__pycache__/movies.cpython-312.pyc
+app/repositories/__pycache__/neo4j.cpython-312.pyc
