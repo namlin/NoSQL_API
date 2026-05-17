@@ -10,7 +10,7 @@ Desarrollada con **FastAPI + Python** para CI-0141 Bases de Datos Avanzadas — 
 
 ## Instalación de base de datos
 
-Antes de configurar la API, inicia el contenedor de Neo4j de forma aislada:
+Antes de configurar la API, se debe iniciar el contenedor de Neo4j de forma aislada:
 
 ```bash
 cd neo4j
@@ -24,7 +24,7 @@ cd ..
 * **Puerto de Comunicación (Bolt):** `7687` (usado internamente por la API).
 
 
-## Instalación de front?(AYUDA CON EL NOMBRE)
+## Instalación de cliente web para administrar la Base de datos
 
 ```bash
 # 1. Clonar el repositorio
@@ -63,14 +63,12 @@ cd NoSQL_API
 
 ## Configuración de la base de datos
 
-Abre tu archivo `.env` recién creado y asegúrate de que tenga las siguientes variables asignadas para activar Neo4j:
+Se debe abrir el archivo `.env` recién creado y asegurarse de que tenga las siguientes variables asignadas para activar Neo4j:
 
 ```env
 DB_BACKEND=neo4j
 NEO4J_URI=bolt://localhost:7687
 ```
-
-*(Si deseas probar con datos temporales simulados sin usar Docker, puedes cambiar temporalmente a `DB_BACKEND=mock`).*
 
 ## Ejecutar el servidor
 
@@ -78,7 +76,7 @@ NEO4J_URI=bolt://localhost:7687
    uvicorn app.main:app --reload
    ```
 
-- La API queda disponible en `http://localhost:8000`.
+- La API quedará disponible en `http://localhost:8000`.
 - Swagger UI: `http://localhost:8000/docs`
 
 ## Endpoints
@@ -112,10 +110,10 @@ Para cargar los datos es necesario una conexion a internet para recibir los dato
 
 Una vez ingresado a Neo4j browser este mostrara un modal solicitando la informacion para conectarse a la instancia, de haber seguido los pasos en este documento la conexion no requerira contraseña y le permitira conectarse con la informacion por defecto. Tras conectarse a la instancia se tienen 2 opciones para inicializar la base de datos:
 
-### Importar seed_db.csv
-La primera es dar click a la seccion "saved cypher", la segunda opcion de arriba a abajo en el menu lateral. En esta pagina a la derecha del titulo se encuentran 4 opciones, se seleccionara "Import saved cypher", la tercera opcion de derecha a izquierda.
+* ### Importar seed_db.csv
+   La primera es dar click a la seccion "saved cypher", la segunda opcion de arriba a abajo en el menu lateral. En esta pagina a la derecha del titulo se encuentran 4 opciones, se seleccionara "Import saved cypher", la tercera opcion de derecha a izquierda.
 
-Seguido de esto se mostrara el explorador de archivos, navegue hasta la carpeta neo4j de este proyecto y seleccione "seed_db.cv". Al hacer esto se importaran las instrucciones y se mostrara en la lista el documento. Dirija el raton sobre la entrada de la lista y a la derecha se mostrara un circulo azul similar a un boton de reproducir, de click ahí para ejecutarlo y cargar la base de datos.
+   Seguido de esto se mostrara el explorador de archivos, navegue hasta la carpeta neo4j de este proyecto y seleccione "seed_db.cv". Al hacer esto se importaran las instrucciones y se mostrara en la lista el documento. Dirija el raton sobre la entrada de la lista y a la derecha se mostrara un circulo azul similar a un boton de reproducir, de click ahí para ejecutarlo y cargar la base de datos.
 
 ## Copiar querry
 
