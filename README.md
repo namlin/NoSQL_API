@@ -108,7 +108,21 @@ NEO4J_URI=bolt://localhost:7687
 
 ## Carga de datos (seed)
 
-(PROCESO...)
+Para cargar los datos es necesario una conexion a internet para recibir los datos y acceder a la interfaz web de neo4j (por defecto http://localhost:7474).
+
+Una vez ingresado a Neo4j browser este mostrara un modal solicitando la informacion para conectarse a la instancia, de haber seguido los pasos en este documento la conexion no requerira contraseña y le permitira conectarse con la informacion por defecto. Tras conectarse a la instancia se tienen 2 opciones para inicializar la base de datos:
+
+### Importar seed_db.csv
+La primera es dar click a la seccion "saved cypher", la segunda opcion de arriba a abajo en el menu lateral. En esta pagina a la derecha del titulo se encuentran 4 opciones, se seleccionara "Import saved cypher", la tercera opcion de derecha a izquierda.
+
+Seguido de esto se mostrara el explorador de archivos, navegue hasta la carpeta neo4j de este proyecto y seleccione "seed_db.cv". Al hacer esto se importaran las instrucciones y se mostrara en la lista el documento. Dirija el raton sobre la entrada de la lista y a la derecha se mostrara un circulo azul similar a un boton de reproducir, de click ahí para ejecutarlo y cargar la base de datos.
+
+## Copiar querry
+
+Alternativamente, se puede dirigir a la misma carpeta neo4j de este proyecto y abra "seed_db.cypher" con cualquier editor de texto, copie todos sus contenidos, y peguelos en la barra superior derecha de Neo4j browser.
+
+Con el texto en la barra, en la esquina superior derecha del espacio donde pego el texto se podra ver un circulo azul similar a un boton de reproducir, de click ahí para ejecutarlo y cargar la base de datos.
+
 
 ## Estructura del proyecto
 
