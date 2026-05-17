@@ -24,7 +24,7 @@ cd ..
 * **Puerto de Comunicación (Bolt):** `7687` (usado internamente por la API).
 
 
-## Instalación de cliente web para administrar la Base de datos
+## Instalación de cliente para administrar la Base de datos
 
 ```bash
 # 1. Clonar el repositorio
