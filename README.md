@@ -8,33 +8,78 @@ Desarrollada con **FastAPI + Python** para CI-0141 Bases de Datos Avanzadas — 
 - Python 3.11+
 - pip
 
-## Instalación
+## Instalación de base de datos
+
+Antes de configurar la API, inicia el contenedor de Neo4j de forma aislada:
+
+```bash
+cd neo4j
+docker compose up -d
+cd ..
+```
+
+*Esto levantará el motor de grafos en segundo plano:*
+
+* **Interfaz Web (Neo4j Browser):** http://localhost:7474 (para ver visualmente los nodos y aristas).
+* **Puerto de Comunicación (Bolt):** `7687` (usado internamente por la API).
+
+
+## Instalación de front?(AYUDA CON EL NOMBRE)
 
 ```bash
 # 1. Clonar el repositorio
 git clone <url-del-repo>
 cd NoSQL_API
-
-# 2. Crear y activar entorno virtual
-python -m venv venv
-source venv/bin/activate        # macOS/Linux
-venv\Scripts\activate           # Windows
-
-# 3. Instalar dependencias
-pip install -r requirements.txt
-
-# 4. Copiar el archivo de configuración
-cp .env.example .env
 ```
+
+* ### Windows
+
+   ```bash
+   # 2. Crear y activar entorno virtual
+   python -m venv venv
+   venv\Scripts\activate
+
+   # 3. Instalar dependencias
+   pip install -r requirements.txt
+
+   # 4. Copiar el archivo de configuración
+   cp .env.example .env
+   ```
+
+
+* ### Linux (Debian & Ubuntu) / macOS 
+
+   ```bash
+   # 2. Crear y activar entorno virtual
+   python3 -m venv venv
+   source venv/bin/activate
+
+   # 3. Instalar dependencias
+   pip install -r requirements.txt
+
+   # 4. Copiar el archivo de configuración
+   cp .env.example .env
+   ```
+
+## Configuración de la base de datos
+
+Abre tu archivo `.env` recién creado y asegúrate de que tenga las siguientes variables asignadas para activar Neo4j:
+
+```env
+DB_BACKEND=neo4j
+NEO4J_URI=bolt://localhost:7687
+```
+
+*(Si deseas probar con datos temporales simulados sin usar Docker, puedes cambiar temporalmente a `DB_BACKEND=mock`).*
 
 ## Ejecutar el servidor
 
-```bash
-uvicorn app.main:app --reload
-```
+   ```bash
+   uvicorn app.main:app --reload
+   ```
 
-La API queda disponible en `http://localhost:8000`.
-Swagger UI: `http://localhost:8000/docs`
+- La API queda disponible en `http://localhost:8000`.
+- Swagger UI: `http://localhost:8000/docs`
 
 ## Endpoints
 
@@ -49,54 +94,21 @@ Swagger UI: `http://localhost:8000/docs`
 | DELETE | `/api/movies/{id}` | Eliminar una película |
 | GET | `/api/movies/{id}/similar` | Películas similares (traversal de grafo) |
 
-### Parámetros de búsqueda (`/api/movies/search`)
+* ### Parámetros de búsqueda (`/api/movies/search`)
 
-| Parámetro | Tipo | Descripción |
-|-----------|------|-------------|
-| `title` | string | Búsqueda parcial por título |
-| `genre` | string | Filtro por género (ej: `Action`, `Drama`) |
-| `year_min` | int | Año mínimo de estreno |
-| `year_max` | int | Año máximo de estreno |
-| `rating_min` | float | Rating mínimo IMDb (0.0 – 10.0) |
-| `actor_name` | string | Nombre de actor (solo con BD de grafos real) |
+   | Parámetro | Tipo | Descripción |
+   |-----------|------|-------------|
+   | `title` | string | Búsqueda parcial por título |
+   | `genre` | string | Filtro por género (ej: `Action`, `Drama`) |
+   | `year_min` | int | Año mínimo de estreno |
+   | `year_max` | int | Año máximo de estreno |
+   | `rating_min` | float | Rating mínimo IMDb (0.0 – 10.0) |
+   | `actor_name` | string | Nombre de actor (solo con BD de grafos real) |
 
-## Configuración de la base de datos
-
-El backend se controla con la variable `DB_BACKEND` en el archivo `.env`:
-
-| Valor | Descripción |
-|-------|-------------|
-| `mock` | Almacenamiento en memoria (default, sin BD real) |
-| `neptune` | Amazon Neptune (Gremlin) — implementar en `app/repositories/neptune.py` |
-
-Para conectar la BD real:
-1. Instalar el driver: `pip install gremlinpython` (Neptune) o `pip install neo4j`
-2. Implementar los métodos en `app/repositories/neptune.py`
-3. Actualizar `.env`:
-   ```
-   DB_BACKEND=neptune
-   DB_URL=wss://<neptune-endpoint>:8182/gremlin
-   ```
 
 ## Carga de datos (seed)
 
-```bash
-# 1. Crear carpetas de datos
-mkdir -p data/imdb data/movielens
-
-# 2. Descargar MovieLens ml-latest-small
-#    https://grouplens.org/datasets/movielens/latest/
-#    Extraer links.csv y ratings.csv en data/movielens/
-
-# 3. Descargar archivos IMDb
-#    https://datasets.imdbws.com/
-#    Descargar y colocar en data/imdb/:
-#      title.basics.tsv.gz, title.ratings.tsv.gz,
-#      title.principals.tsv.gz, name.basics.tsv.gz
-
-# 4. Ejecutar el script de carga
-python scripts/seed_db.py
-```
+(PROCESO...)
 
 ## Estructura del proyecto
 
@@ -110,7 +122,7 @@ NoSQL_API/
 │   ├── repositories/
 │   │   ├── base.py          # Interfaz abstracta
 │   │   ├── mock.py          # Implementación en memoria
-│   │   └── neptune.py       # Implementación Neptune (pendiente)
+│   │   └── neo4j.py         # Implementación de Neo4j con Cypher
 │   └── routers/movies.py    # Endpoints
 ├── scripts/seed_db.py       # Carga de datos IMDb + MovieLens
 ├── requirements.txt
