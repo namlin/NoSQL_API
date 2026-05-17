@@ -10,6 +10,12 @@ services:
 
         environment:
             NEO4J_AUTH: none
+            # Las siguientes son opciones para el ajuste en caso de que los recursos
+            # asignados por defecto sean insuficientes
+            #NEO4J_server_memory_heap_initial__size: 4G
+            #NEO4J_server_memory_heap_max__size: 4G
+            #NEO4J_dbms_import_csv_buffer__size: 209715200
+            #NEO4J_dbms_memory_transaction_total_max: 4G
         
         volumes:
             - neo4j-volume:/var/lib/neo4j/data
