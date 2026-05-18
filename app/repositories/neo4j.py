@@ -179,17 +179,25 @@ class Neo4jMovieRepository(AbstractMovieRepository):
         rating_min: float | None,
         actor_name: str | None,
     ) -> list[dict]:
-        """Búsqueda dinámica multi-filtro usando Cypher adaptable."""
+
         query = """
         MATCH (m:movies)
-        OPTIONAL MATCH (p:persons)-[:WORKED_IN]->(m)
+
         WHERE ($title IS NULL OR toLower(m.title) CONTAINS toLower($title))
-          AND ($genre IS NULL OR $genre IN m.genres)
-          AND ($year_min IS NULL OR m.year >= toInteger($year_min))
-          AND ($year_max IS NULL OR m.year <= toInteger($year_max))
-          AND ($rating_min IS NULL OR m.averageRating >= toFloat($rating_min))
-          AND ($actor_name IS NULL OR toLower(p.name) CONTAINS toLower($actor_name))
-        RETURN m
+        AND ($genre IS NULL OR $genre IN m.genres)
+        AND ($year_min IS NULL OR m.year >= $year_min)
+        AND ($year_max IS NULL OR m.year <= $year_max)
+        AND ($rating_min IS NULL OR m.averageRating >= $rating_min)
+
+        AND (
+                $actor_name IS NULL
+                OR EXISTS {
+                    MATCH (p:persons)-[:ACTED_IN]->(m)
+                    WHERE toLower(p.name) CONTAINS toLower($actor_name)
+                }
+        )
+
+        RETURN DISTINCT m
         LIMIT 100
         """
 
@@ -205,7 +213,11 @@ class Neo4jMovieRepository(AbstractMovieRepository):
 
             with self.driver.session() as session:
                 result = session.run(query, **params)
-                return [self._normalize_movie(dict(record["m"])) for record in result]
+
+                return [
+                    self._normalize_movie(dict(record["m"]))
+                    for record in result
+                ]
 
         return await asyncio.to_thread(_search)
 
