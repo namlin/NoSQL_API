@@ -113,7 +113,7 @@ Una vez ingresado a Neo4j browser este mostrara un modal solicitando la informac
 * ### Importar seed_db.csv
    La primera es dar click a la seccion "saved cypher", la segunda opcion de arriba a abajo en el menu lateral. En esta pagina a la derecha del titulo se encuentran 4 opciones, se seleccionara "Import saved cypher", la tercera opcion de derecha a izquierda.
 
-   Seguido de esto se mostrara el explorador de archivos, navegue hasta la carpeta neo4j de este proyecto y seleccione "seed_db.cv". Al hacer esto se importaran las instrucciones y se mostrara en la lista el documento. Dirija el raton sobre la entrada de la lista y a la derecha se mostrara un circulo azul similar a un boton de reproducir, de click ahí para ejecutarlo y cargar la base de datos.
+   Seguido de esto se mostrara el explorador de archivos, navegue hasta la carpeta neo4j de este proyecto y seleccione "seed_db.csv". Al hacer esto se importaran las instrucciones y se mostrara en la lista el documento. Dirija el raton sobre la entrada de la lista y a la derecha se mostrara un circulo azul similar a un boton de reproducir, de click ahí para ejecutarlo y cargar la base de datos.
 
 * ### Copiar querry
 
