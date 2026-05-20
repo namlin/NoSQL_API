@@ -47,6 +47,8 @@ class InMemoryMovieRepository(AbstractMovieRepository):
         year_max: int | None = None,
         rating_min: float | None = None,
         actor_name: str | None = None,
+        page: int = 1,
+        limit: int = 10,
     ) -> list[MovieResponse]:
         results = []
         for m in _db.values():
@@ -62,7 +64,8 @@ class InMemoryMovieRepository(AbstractMovieRepository):
                 continue
             # actor_name no se puede filtrar sin grafo — se ignora en el mock
             results.append(MovieResponse(**m))
-        return results
+        start = (page - 1) * limit
+        return results[start: start + limit]
 
     async def find_similar(self, movie_id: str, limit: int = 10) -> list[MovieResponse]:
         """Similaridad por géneros compartidos (aproximación sin grafo real)."""

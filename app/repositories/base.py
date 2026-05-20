@@ -29,6 +29,8 @@ class AbstractMovieRepository(ABC):
         year_max: int | None,
         rating_min: float | None,
         actor_name: str | None,
+        page: int,
+        limit: int,
     ) -> list[MovieResponse]: ...
 
     @abstractmethod

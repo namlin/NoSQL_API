@@ -38,10 +38,12 @@ async def search_movies(
     rating_min: Annotated[float | None, Query(ge=0.0, le=10.0, description="Rating mínimo IMDb")] = None,
     actor_name: Annotated[
         str | None,
-        Query(description="Nombre de actor/actriz (requiere BD de grafos real; ignorado en mock)"),
+        Query(description="Nombre de actor/actriz (búsqueda parcial, no sensible a mayúsculas)"),
     ] = None,
+    page: Annotated[int, Query(ge=1, description="Número de página")] = 1,
+    limit: Annotated[int, Query(ge=1, le=100, description="Resultados por página")] = 10,
 ):
-    return await repo.search(title, genre, year_min, year_max, rating_min, actor_name)
+    return await repo.search(title, genre, year_min, year_max, rating_min, actor_name, page, limit)
 
 
 @router.get(
