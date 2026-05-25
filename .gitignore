@@ -14,3 +14,11 @@ app/repositories/__pycache__/mock.cpython-312.pyc
 app/routers/__pycache__/__init__.cpython-312.pyc
 app/routers/__pycache__/movies.cpython-312.pyc
 app/repositories/__pycache__/neo4j.cpython-312.pyc
+app/__pycache__/*
+app/models/__pycache__/*
+app/repositories/__pycache__/__init__.cpython-314.pyc
+app/repositories/__pycache__/base.cpython-314.pyc
+app/repositories/__pycache__/mock.cpython-314.pyc
+app/repositories/__pycache__/neo4j.cpython-314.pyc
+app/routers/__pycache__/__init__.cpython-314.pyc
+app/routers/__pycache__/movies.cpython-314.pyc
